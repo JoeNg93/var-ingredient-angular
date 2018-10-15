@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start:front-end": "ng serve",
-    "start:back-end": "node src/back-end/app.js",
+    "start:back-end": "nodemon src/back-end/app.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -54,6 +54,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "lint-staged": "^7.3.0",
+    "nodemon": "^1.18.4",
     "prettier": "^1.14.3",
     "protractor": "~5.4.0",
     "stylelint": "^9.6.0",
