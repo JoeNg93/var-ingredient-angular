@@ -2,6 +2,7 @@ const path = require('path');
 
 const mongoose = require('mongoose');
 const express = require('express');
+const cors = require('cors');
 
 const apiRouter = require('./routers/api');
 
@@ -18,6 +19,8 @@ mongoose.connect(
     console.log('Connected to database.');
   }
 );
+
+app.use(cors());
 
 const STATIC_FOLDER = path.join(
   __dirname,
