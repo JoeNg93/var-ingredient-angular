@@ -6,7 +6,9 @@ import {
   MatAutocompleteSelectedEvent,
   MatChipInputEvent,
 } from '@angular/material';
-import { difference } from 'lodash';
+import { difference, map as _map } from 'lodash';
+import { IngredientService } from '../ingredient.service';
+import { Ingredient } from '../ingredient.model';
 
 @Component({
   selector: 'app-searchbar',
@@ -17,12 +19,12 @@ export class SearchbarComponent implements OnInit {
   ingredientCtrl = new FormControl();
   filteredIngredients: Observable<string[]>;
   ingredients: string[] = [];
-  allIngredients: string[] = ['a', 'b', 'c', 'd', 'e', 'f'];
+  allIngredients: string[] = [];
 
   @ViewChild('ingredientInput')
   ingredientInput: ElementRef<HTMLInputElement>;
 
-  constructor() {
+  constructor(private ingredientService: IngredientService) {
     this.filteredIngredients = this.ingredientCtrl.valueChanges.pipe(
       startWith(''),
       map(
@@ -34,7 +36,14 @@ export class SearchbarComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ingredientService
+      .getIngredients()
+      .subscribe(
+        (ingredients: Ingredient[]) =>
+          (this.allIngredients = _map(ingredients, 'name'))
+      );
+  }
 
   add(event: MatChipInputEvent) {
     // Dont allow user add ingredient by pressing Enter, just clear the value
