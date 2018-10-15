@@ -1,7 +1,23 @@
-const express = require('express');
 const path = require('path');
 
+const mongoose = require('mongoose');
+const express = require('express');
+
+const apiRouter = require('./routers/api');
+
 const app = express();
+
+mongoose.connect(
+  'mongodb://localhost:27017/test-var-ingredients',
+  { useNewUrlParser: true },
+  err => {
+    if (err) {
+      console.log(`Failed to connect to database: ${err.message}.`);
+      return;
+    }
+    console.log('Connected to database.');
+  }
+);
 
 const STATIC_FOLDER = path.join(
   __dirname,
@@ -12,6 +28,8 @@ const STATIC_FOLDER = path.join(
 );
 
 app.use(express.static(STATIC_FOLDER));
+
+app.use('/api', apiRouter);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(STATIC_FOLDER, 'index.html'));
