@@ -49,6 +49,7 @@ RecipeSchema.statics.findByIngredients = function findByIngredients(
 
 RecipeSchema.methods.serialize = function serialize() {
   return pick(this, [
+    'id',
     'name',
     'description',
     'image',
