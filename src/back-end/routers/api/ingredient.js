@@ -7,7 +7,7 @@ const Ingredient = require('../../models/ingredient');
 router.get('/', async (req, res) => {
   try {
     const ingredients = await Ingredient.find({});
-    return res.json(ingredients);
+    return res.json(ingredients.map(ingredient => ingredient.serialize()));
   } catch (err) {
     console.log(`Error in /api/ingredients: ${err.message}`);
     return res.status(500).send();
