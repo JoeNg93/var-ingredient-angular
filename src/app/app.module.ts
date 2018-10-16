@@ -13,9 +13,11 @@ import {
 
 import { AppComponent } from './app.component';
 import { SearchbarComponent } from './searchbar/searchbar.component';
+import { AppRoutingModule } from './app-routing.module';
+import { MainPageComponent } from './main-page/main-page.component';
 
 @NgModule({
-  declarations: [AppComponent, SearchbarComponent],
+  declarations: [AppComponent, SearchbarComponent, MainPageComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -26,6 +28,7 @@ import { SearchbarComponent } from './searchbar/searchbar.component';
     MatFormFieldModule,
     MatIconModule,
     MatSnackBarModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
