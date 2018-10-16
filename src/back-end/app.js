@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const expressWinston = require('express-winston');
 
 const apiRouter = require('./routers/api');
+const logger = require('./utils/logger');
 
 const app = express();
 
@@ -14,10 +16,10 @@ mongoose.connect(
   { useNewUrlParser: true },
   err => {
     if (err) {
-      console.log(`Failed to connect to database: ${err.message}.`);
+      logger.log('error', `Failed to connect to database: ${err.message}.`);
       return;
     }
-    console.log('Connected to database.');
+    logger.log('info', 'Connected to database.');
   }
 );
 
@@ -33,6 +35,14 @@ const STATIC_FOLDER = path.join(
 
 app.use(express.static(STATIC_FOLDER));
 
+app.use(
+  '/api',
+  expressWinston.logger({
+    winstonInstance: logger,
+    meta: false,
+    expressFormat: true,
+  })
+);
 app.use('/api', bodyParser.json());
 app.use('/api', apiRouter);
 
@@ -41,5 +51,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(1206, () => {
-  console.log('Server is listening on port 1206...');
+  logger.log('info', 'Server is listening on port 1206.');
 });
