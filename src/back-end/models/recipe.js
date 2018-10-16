@@ -37,6 +37,18 @@ const RecipeSchema = new mongoose.Schema({
 
 const Recipe = mongoose.model('Recipe', RecipeSchema);
 
+RecipeSchema.statics.findByIngredients = function findByIngredients(
+  ingredients
+) {
+  return Recipe.find({
+    ingredients: {
+      $elemMatch: {
+        name: { $in: ingredients },
+      },
+    },
+  });
+};
+
 RecipeSchema.methods.serialize = function serialize() {
   return pick(this, [
     'name',
