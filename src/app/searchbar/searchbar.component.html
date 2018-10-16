@@ -1,14 +1,15 @@
-<mat-form-field class="search-form">
+<mat-form-field class="search-form" appearance="outline">
 
   <mat-chip-list #chipList>
-    <mat-chip *ngFor="let ingredient of ingredients" removeable (removed)="onRemoveIngredient(ingredient)">
+    <mat-chip *ngFor="let ingredient of ingredients" removeable (removed)="onRemoveIngredient(ingredient)"
+      disableRipple>
       {{ingredient}}
       <mat-icon matChipRemove>cancel</mat-icon>
     </mat-chip>
   </mat-chip-list>
 
-  <input placeholder="Add ingredient..." #ingredientInput [formControl]="ingredientCtrl"
-    [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputAddOnBlur]="addOnBlur"
+  <input placeholder="Add ingredient..." onfocus="this.placeholder=''" #ingredientInput
+    [formControl]="ingredientCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
     (matChipInputTokenEnd)="add($event)">
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectIngredient($event)">
@@ -19,4 +20,8 @@
 
 </mat-form-field>
 
-<button (click)="onClickSearchRecipes()">Search</button>
+<a class="f5 link dim br-pill ba ph4 pv2 mr2 dib dark-blue" (click)="onClickClearSearchField($event)"
+  href="#">Clear</a>
+
+<a class="f5 link dim br-pill ph4 pv2 ml2 dib white bg-dark-blue" (click)="onClickSearchRecipes($event)"
+  href="#">Search</a>

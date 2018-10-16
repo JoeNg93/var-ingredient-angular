@@ -69,7 +69,9 @@ export class SearchbarComponent implements OnInit {
     this.ingredientCtrl.setValue('');
   }
 
-  onClickSearchRecipes() {
+  onClickSearchRecipes(event) {
+    event.preventDefault();
+
     if (_isEmpty(this.ingredients)) {
       this.router.navigate(['/recipes']);
       return;
@@ -78,6 +80,12 @@ export class SearchbarComponent implements OnInit {
     this.router.navigate(['/recipes'], {
       queryParams: { ingredients: this.ingredients.join(',') },
     });
+  }
+
+  onClickClearSearchField(event) {
+    event.preventDefault();
+
+    this.ingredients = [];
   }
 
   private _getAutocompleteIngredients() {
