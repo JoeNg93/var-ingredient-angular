@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const apiRouter = require('./routers/api');
 
@@ -32,6 +33,7 @@ const STATIC_FOLDER = path.join(
 
 app.use(express.static(STATIC_FOLDER));
 
+app.use('/api', bodyParser.json());
 app.use('/api', apiRouter);
 
 app.get('*', (req, res) => {
