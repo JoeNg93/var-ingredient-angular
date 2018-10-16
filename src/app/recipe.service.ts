@@ -46,4 +46,15 @@ export class RecipeService {
         })
       );
   }
+
+  getRecipe(id: string): Observable<Recipe> {
+    this.fetchingData.next(true);
+    return this.http.get<Recipe>(`${this.recipesUrl}/${id}`).pipe(
+      tap(_ => this.fetchingData.next(false)),
+      catchError((err: Error) => {
+        this.snackBar.open(`Error: ${err.message}`);
+        return of({} as Recipe);
+      })
+    );
+  }
 }
