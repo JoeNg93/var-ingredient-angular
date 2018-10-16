@@ -16,6 +16,7 @@ import { SearchbarComponent } from './searchbar/searchbar.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MainPageComponent } from './main-page/main-page.component';
 import { RecipeListPageComponent } from './recipe-list-page/recipe-list-page.component';
+import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { RecipeListPageComponent } from './recipe-list-page/recipe-list-page.com
     SearchbarComponent,
     MainPageComponent,
     RecipeListPageComponent,
+    RecipeDetailComponent,
   ],
   imports: [
     BrowserModule,
