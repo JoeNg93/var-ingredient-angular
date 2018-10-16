@@ -2,8 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MainPageComponent } from './main-page/main-page.component';
+import { RecipeListPageComponent } from './recipe-list-page/recipe-list-page.component';
 
-const routes: Routes = [{ path: '', component: MainPageComponent }];
+const routes: Routes = [
+  { path: '', component: MainPageComponent },
+  { path: 'recipes', component: RecipeListPageComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
