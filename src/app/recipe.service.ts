@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject, Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
@@ -26,5 +26,24 @@ export class RecipeService {
         return of([] as Recipe[]);
       })
     );
+  }
+
+  getRecipesByIngredients(ingredients: string): Observable<Recipe[]> {
+    const queryParams = new HttpParams({
+      fromObject: {
+        ingredients,
+      },
+    });
+
+    this.fetchingData.next(true);
+    return this.http
+      .get<Recipe[]>(this.recipesUrl, { params: queryParams })
+      .pipe(
+        tap(_ => this.fetchingData.next(false)),
+        catchError((err: Error) => {
+          this.snackBar.open(`Error: ${err.message}`);
+          return of([] as Recipe[]);
+        })
+      );
   }
 }
