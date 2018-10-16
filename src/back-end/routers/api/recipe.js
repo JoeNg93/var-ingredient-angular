@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
   try {
     let recipes = [];
     if (ingredients && ingredients.trim()) {
-      recipes = await Recipe.findByIngredients(ingredients.split(','));
+      recipes = await Recipe.findByIngredients(ingredients.split(/\s*,\s*/));
     } else {
       recipes = await Recipe.find({});
     }
