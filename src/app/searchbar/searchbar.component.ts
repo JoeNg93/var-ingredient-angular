@@ -1,12 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
   MatAutocompleteSelectedEvent,
   MatChipInputEvent,
 } from '@angular/material';
-import { difference, map as _map } from 'lodash';
+import { difference, map as _map, isEmpty as _isEmpty } from 'lodash';
 import { IngredientService } from '../ingredient.service';
 import { Ingredient } from '../ingredient.model';
 
@@ -24,7 +25,10 @@ export class SearchbarComponent implements OnInit {
   @ViewChild('ingredientInput')
   ingredientInput: ElementRef<HTMLInputElement>;
 
-  constructor(private ingredientService: IngredientService) {
+  constructor(
+    private ingredientService: IngredientService,
+    private router: Router
+  ) {
     this.filteredIngredients = this.ingredientCtrl.valueChanges.pipe(
       startWith(''),
       map(
@@ -63,6 +67,17 @@ export class SearchbarComponent implements OnInit {
     }
     this.ingredientInput.nativeElement.value = '';
     this.ingredientCtrl.setValue('');
+  }
+
+  onClickSearchRecipes() {
+    if (_isEmpty(this.ingredients)) {
+      this.router.navigate(['/recipes']);
+      return;
+    }
+
+    this.router.navigate(['/recipes'], {
+      queryParams: { ingredients: this.ingredients.join(',') },
+    });
   }
 
   private _getAutocompleteIngredients() {
