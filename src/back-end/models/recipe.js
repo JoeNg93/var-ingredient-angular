@@ -35,12 +35,10 @@ const RecipeSchema = new mongoose.Schema({
   },
 });
 
-const Recipe = mongoose.model('Recipe', RecipeSchema);
-
 RecipeSchema.statics.findByIngredients = function findByIngredients(
   ingredients
 ) {
-  return Recipe.find({
+  return this.find({
     ingredients: {
       $elemMatch: {
         name: { $in: ingredients },
@@ -62,5 +60,7 @@ RecipeSchema.methods.serialize = function serialize() {
     'numOfDislikes',
   ]);
 };
+
+const Recipe = mongoose.model('Recipe', RecipeSchema);
 
 module.exports = Recipe;
