@@ -37,8 +37,9 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
+
     <div class="row ph5 pv4">
-      <div class="col-xs-3 ph3" *ngFor="let recipe of recipes">
+      <div class="col-xs-3 ph3 mb4" *ngFor="let recipe of recipes">
         <mat-card class="card">
           <mat-card-header>
             <mat-card-title>
@@ -49,18 +50,20 @@
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <div class="row"><i>{{recipe.numOfLikes}} likes - {{recipe.numOfDislikes}} dislikes</i></div>
+            <div class="row"><i>{{recipe.numOfLikes}} likes - {{recipe.numOfDislikes}}
+                dislikes</i></div>
           </mat-card-content>
           <mat-card-actions class="card__actions">
-            <button class="btn-icon" (click)="onClickLikeRecipe(recipe.id)">
-              <mat-icon>thumb_up</mat-icon>
+            <button class="btn-icon" (click)="onClickLikeRecipe(recipe.id)" [disabled]="recipesLiked.indexOf(recipe.id) !== -1">
+              <mat-icon [ngClass]="recipesLiked.indexOf(recipe.id) !== -1 ? 'dark-blue' : 'black'">thumb_up</mat-icon>
             </button>
-            <button class="btn-icon" (click)="onClickDislikeRecipe(recipe.id)">
-              <mat-icon>thumb_down</mat-icon>
+            <button class="btn-icon" (click)="onClickDislikeRecipe(recipe.id)" [disabled]="recipesDisliked.indexOf(recipe.id) !== -1">
+              <mat-icon [ngClass]="recipesDisliked.indexOf(recipe.id) !== -1 ? 'dark-blue' : 'black'">thumb_down</mat-icon>
             </button>
           </mat-card-actions>
         </mat-card>
       </div>
+
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

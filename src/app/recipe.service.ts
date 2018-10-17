@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject, Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { Recipe } from './recipe.model';
 
@@ -56,5 +56,27 @@ export class RecipeService {
         return of({} as Recipe);
       })
     );
+  }
+
+  likeRecipe(id: string): Observable<boolean> {
+    return this.http.patch<boolean>(`${this.recipesUrl}/${id}/likes`, {}).pipe(
+      map(res => true),
+      catchError<boolean>((err: Error) => {
+        this.snackBar.open(`Error: ${err.message}`);
+        return false as never;
+      })
+    );
+  }
+
+  dislikeRecipe(id: string): Observable<boolean> {
+    return this.http
+      .patch<boolean>(`${this.recipesUrl}/${id}/dislikes`, {})
+      .pipe(
+        map(res => true),
+        catchError<boolean>((err: Error) => {
+          this.snackBar.open(`Error: ${err.message}`);
+          return false as never;
+        })
+      );
   }
 }

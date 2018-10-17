@@ -17,6 +17,9 @@ export class RecipeListPageComponent implements OnInit {
   ingredientsByCategory: { [key: string]: Ingredient[] } = {};
   queryIngredients: string[] = [];
 
+  recipesLiked: string[] = [];
+  recipesDisliked: string[] = [];
+
   constructor(
     private recipeService: RecipeService,
     private ingredientService: IngredientService,
@@ -83,9 +86,33 @@ export class RecipeListPageComponent implements OnInit {
       .subscribe((recipes: Recipe[]) => (this.recipes = recipes));
   }
 
-  onClickLikeRecipe(recipeId: string) {}
+  onClickLikeRecipe(recipeId: string) {
+    this.recipeService.likeRecipe(recipeId).subscribe((success: boolean) => {
+      if (success) {
+        this.recipesLiked = this.recipesLiked.concat(recipeId);
+        this.recipes = this.recipes.map(
+          recipe =>
+            recipe.id === recipeId
+              ? { ...recipe, numOfLikes: recipe.numOfLikes + 1 }
+              : recipe
+        );
+      }
+    });
+  }
 
-  onClickDislikeRecipe(recipeId: string) {}
+  onClickDislikeRecipe(recipeId: string) {
+    this.recipeService.dislikeRecipe(recipeId).subscribe((success: boolean) => {
+      if (success) {
+        this.recipesDisliked = this.recipesDisliked.concat(recipeId);
+        this.recipes = this.recipes.map(
+          recipe =>
+            recipe.id === recipeId
+              ? { ...recipe, numOfDislikes: recipe.numOfDislikes + 1 }
+              : recipe
+        );
+      }
+    });
+  }
 
   onClickRecipeTitle(recipeId: string) {
     this.router.navigate([`/recipes/${recipeId}`]);
