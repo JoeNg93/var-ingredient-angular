@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { groupBy as _groupBy, isEmpty as _isEmpty } from 'lodash';
 
 import { RecipeService } from '../recipe.service';
+import { IngredientService } from '../ingredient.service';
 import { Recipe } from '../recipe.model';
+import { Ingredient } from '../ingredient.model';
 
 @Component({
   selector: 'app-recipe-page',
@@ -11,23 +14,72 @@ import { Recipe } from '../recipe.model';
 })
 export class RecipeListPageComponent implements OnInit {
   recipes: Recipe[] = [];
+  ingredientsByCategory: { [key: string]: Ingredient[] } = {};
+  queryIngredients: string[] = [];
 
   constructor(
     private recipeService: RecipeService,
-    private route: ActivatedRoute
+    private ingredientService: IngredientService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    this.ingredientService.getIngredients().subscribe((x: Ingredient[]) => {
+      this.ingredientsByCategory = _groupBy(x, 'categoryName');
+    });
+
     const ingredients = this.route.snapshot.queryParamMap.get('ingredients');
 
     if (ingredients && ingredients.trim()) {
-      this.recipeService
-        .getRecipesByIngredients(ingredients)
-        .subscribe((recipes: Recipe[]) => (this.recipes = recipes));
+      this.queryIngredients = ingredients.split(/\s*,\s*/);
+      this.getRecipesByIngredients(ingredients);
     } else {
-      this.recipeService
-        .getRecipes()
-        .subscribe((recipes: Recipe[]) => (this.recipes = recipes));
+      this.getAllRecipes();
     }
+  }
+
+  onClickRemoveQueryIngredient(ingredientName: string) {
+    this.queryIngredients = this.queryIngredients.filter(
+      ingredient => ingredient !== ingredientName
+    );
+  }
+
+  onToggleIngredient(event, ingredientName: string) {
+    if (event.checked) {
+      this.queryIngredients = this.queryIngredients.concat(ingredientName);
+    } else {
+      this.queryIngredients = this.queryIngredients.filter(
+        ingredient => ingredient !== ingredientName
+      );
+    }
+  }
+
+  onClickSearchAgain(event) {
+    event.preventDefault();
+
+    if (_isEmpty(this.queryIngredients)) {
+      this.getAllRecipes();
+      this.router.navigate(['/recipes']);
+      return;
+    }
+
+    const ingredientsAsStr = this.queryIngredients.join(',');
+    this.getRecipesByIngredients(ingredientsAsStr);
+    this.router.navigate(['/recipes'], {
+      queryParams: { ingredients: ingredientsAsStr },
+    });
+  }
+
+  getAllRecipes() {
+    this.recipeService
+      .getRecipes()
+      .subscribe((recipes: Recipe[]) => (this.recipes = recipes));
+  }
+
+  getRecipesByIngredients(ingredients: string) {
+    this.recipeService
+      .getRecipesByIngredients(ingredients)
+      .subscribe((recipes: Recipe[]) => (this.recipes = recipes));
   }
 }

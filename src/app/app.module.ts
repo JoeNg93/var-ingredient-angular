@@ -9,6 +9,11 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatSnackBarModule,
+  MatSidenavModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatCheckboxModule,
+  MatListModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -36,6 +41,11 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
     MatFormFieldModule,
     MatIconModule,
     MatSnackBarModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatListModule,
     AppRoutingModule,
   ],
   providers: [],

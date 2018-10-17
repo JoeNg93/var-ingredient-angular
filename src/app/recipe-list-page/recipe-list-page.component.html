@@ -1,7 +1,42 @@
-<h1>Recipes</h1>
+<mat-sidenav-container class="h-100 w-100 container">
+  <mat-sidenav mode="side" opened class="ph4 pv2">
+    <div class="row pv3 center-xs">
+      <a class="f5 link dim br-pill ph4 pv2 dib white bg-dark-blue" href="#" (click)="onClickSearchAgain($event)">Search
+        Again</a>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="row pv2 center-xs flex-column">
+      <span class="f4 mb3">Query Ingredients</span>
+      <mat-list>
+        <mat-list-item *ngFor="let ingredient of queryIngredients">
+          <span mat-line>{{ingredient}}</span>
+          <button class="btn-delete-ingredient" (click)="onClickRemoveQueryIngredient(ingredient)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="row pv2 center-xs flex-column">
+      <span class="f4 mb3">Categories</span>
 
-<ul>
-  <li *ngFor="let recipe of recipes">
-    <a routerLink="/recipes/{{recipe.id}}">{{recipe.name}}</a>
-  </li>
-</ul>
+      <mat-accordion displayMode="flat">
+        <mat-expansion-panel *ngFor="let item of ingredientsByCategory | keyvalue">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{item.key}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row" *ngFor="let ingredient of item.value">
+            <mat-checkbox [checked]="queryIngredients.indexOf(ingredient.name) !== -1" (change)="onToggleIngredient($event, ingredient.name)">{{ingredient.name}}</mat-checkbox>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div *ngFor="let recipe of recipes">{{recipe.name}}</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,9 @@
+.container {
+  background: #eee;
+}
+
+.btn-delete-ingredient {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
