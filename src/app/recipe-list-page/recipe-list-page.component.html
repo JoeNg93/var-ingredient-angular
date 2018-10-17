@@ -10,7 +10,7 @@
       <mat-list>
         <mat-list-item *ngFor="let ingredient of queryIngredients">
           <span mat-line>{{ingredient}}</span>
-          <button class="btn-delete-ingredient" (click)="onClickRemoveQueryIngredient(ingredient)">
+          <button class="btn-icon" (click)="onClickRemoveQueryIngredient(ingredient)">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-list-item>

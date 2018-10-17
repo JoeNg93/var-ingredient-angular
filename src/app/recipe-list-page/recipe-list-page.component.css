@@ -2,8 +2,21 @@
   background: #eee;
 }
 
-.btn-delete-ingredient {
+.btn-icon {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+.card {
+  min-height: 200px;
+}
+
+.card__title {
+  cursor: pointer;
+}
+
+.card__actions {
+  position: absolute;
+  bottom: 24px;
 }
