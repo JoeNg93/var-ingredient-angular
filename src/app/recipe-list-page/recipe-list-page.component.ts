@@ -82,4 +82,12 @@ export class RecipeListPageComponent implements OnInit {
       .getRecipesByIngredients(ingredients)
       .subscribe((recipes: Recipe[]) => (this.recipes = recipes));
   }
+
+  onClickLikeRecipe(recipeId: string) {}
+
+  onClickDislikeRecipe(recipeId: string) {}
+
+  onClickRecipeTitle(recipeId: string) {
+    this.router.navigate([`/recipes/${recipeId}`]);
+  }
 }

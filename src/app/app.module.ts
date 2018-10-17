@@ -14,6 +14,7 @@ import {
   MatExpansionModule,
   MatCheckboxModule,
   MatListModule,
+  MatCardModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -46,6 +47,7 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
     MatExpansionModule,
     MatCheckboxModule,
     MatListModule,
+    MatCardModule,
     AppRoutingModule,
   ],
   providers: [],

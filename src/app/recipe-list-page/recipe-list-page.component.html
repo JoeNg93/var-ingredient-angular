@@ -37,6 +37,30 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div *ngFor="let recipe of recipes">{{recipe.name}}</div>
+    <div class="row ph5 pv4">
+      <div class="col-xs-3 ph3" *ngFor="let recipe of recipes">
+        <mat-card class="card">
+          <mat-card-header>
+            <mat-card-title>
+              <span class="f4 card__title" (click)="onClickRecipeTitle(recipe.id)">{{recipe.name}}</span>
+            </mat-card-title>
+            <mat-card-subtitle>
+              <i>""{{recipe.description}}""</i>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row"><i>{{recipe.numOfLikes}} likes - {{recipe.numOfDislikes}} dislikes</i></div>
+          </mat-card-content>
+          <mat-card-actions class="card__actions">
+            <button class="btn-icon" (click)="onClickLikeRecipe(recipe.id)">
+              <mat-icon>thumb_up</mat-icon>
+            </button>
+            <button class="btn-icon" (click)="onClickDislikeRecipe(recipe.id)">
+              <mat-icon>thumb_down</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
