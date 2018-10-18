@@ -5,10 +5,12 @@
     "ng": "ng",
     "start:front-end": "ng serve",
     "start:back-end": "nodemon src/back-end/app.js",
+    "start": "node src/back-end/app.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --prod"
   },
   "private": true,
   "dependencies": {
