@@ -24,7 +24,10 @@ mongoose.connect(
   }
 );
 
-app.use(cors());
+if (process.env.NODE_ENV !== 'production') {
+  // Use CORS for development purpose
+  app.use(cors());
+}
 
 const STATIC_FOLDER = path.join(
   __dirname,
