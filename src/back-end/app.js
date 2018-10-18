@@ -12,7 +12,7 @@ const logger = require('./utils/logger');
 const app = express();
 
 mongoose.connect(
-  'mongodb://localhost:27017/test-var-ingredients',
+  process.env.MONGODB_URI || 'mongodb://localhost:27017/test-var-ingredients',
   { useNewUrlParser: true },
   err => {
     if (err) {
@@ -50,6 +50,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(STATIC_FOLDER, 'index.html'));
 });
 
-app.listen(1206, () => {
+app.listen(process.env.PORT || 1206, () => {
   logger.log('info', 'Server is listening on port 1206.');
 });

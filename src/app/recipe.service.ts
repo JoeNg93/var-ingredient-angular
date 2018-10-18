@@ -11,7 +11,7 @@ import { Recipe } from './recipe.model';
 export class RecipeService {
   fetchingData = new Subject<boolean>();
 
-  private recipesUrl = 'http://localhost:1206/api/recipes';
+  private recipesUrl = 'api/recipes';
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {
     this.fetchingData.next(false);
