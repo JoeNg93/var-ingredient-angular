@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const expressWinston = require('express-winston');
+const compression = require('compression');
 
 const apiRouter = require('./routers/api');
 const logger = require('./utils/logger');
@@ -33,6 +34,7 @@ const STATIC_FOLDER = path.join(
   'var-ingredient-angular'
 );
 
+app.use(compression());
 app.use(express.static(STATIC_FOLDER));
 
 app.use(
