@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { groupBy as _groupBy, isEmpty as _isEmpty } from 'lodash';
+import {
+  groupBy as _groupBy,
+  isEmpty as _isEmpty,
+  map as _map,
+  intersection as _intersection,
+  orderBy as _orderBy,
+} from 'lodash';
 
 import { RecipeService } from '../recipe.service';
 import { IngredientService } from '../ingredient.service';
@@ -19,6 +25,8 @@ export class RecipeListPageComponent implements OnInit {
 
   recipesLiked: string[] = [];
   recipesDisliked: string[] = [];
+
+  recipesSortKey = 'numOfIngredients';
 
   constructor(
     private recipeService: RecipeService,
@@ -77,13 +85,19 @@ export class RecipeListPageComponent implements OnInit {
   getAllRecipes() {
     this.recipeService
       .getRecipes()
-      .subscribe((recipes: Recipe[]) => (this.recipes = recipes));
+      .subscribe(
+        (recipes: Recipe[]) =>
+          (this.recipes = this.sortBy(this.recipesSortKey, recipes))
+      );
   }
 
   getRecipesByIngredients(ingredients: string) {
     this.recipeService
       .getRecipesByIngredients(ingredients)
-      .subscribe((recipes: Recipe[]) => (this.recipes = recipes));
+      .subscribe(
+        (recipes: Recipe[]) =>
+          (this.recipes = this.sortBy(this.recipesSortKey, recipes))
+      );
   }
 
   onClickLikeRecipe(recipeId: string) {
@@ -116,5 +130,30 @@ export class RecipeListPageComponent implements OnInit {
 
   onClickRecipeTitle(recipeId: string) {
     this.router.navigate([`/recipes/${recipeId}`]);
+  }
+
+  getNumOfMissingIngredients(recipeId: string) {
+    const recipe = this.recipes.find(eachRecipe => eachRecipe.id === recipeId);
+    const ingredientsByName = _map(recipe.ingredients, 'name');
+    return (
+      ingredientsByName.length -
+      _intersection(ingredientsByName, this.queryIngredients).length
+    );
+  }
+
+  sortBy(sortKey: string, recipes: Recipe[]) {
+    switch (sortKey) {
+      case 'numOfIngredients':
+        return _orderBy(recipes, 'ingredients.length', 'asc');
+      case 'mostPopular':
+        return _orderBy(recipes, 'numOfLikes', 'desc');
+      default:
+        return recipes;
+    }
+  }
+
+  onChangeRecipeSort(event) {
+    this.recipesSortKey = event.value;
+    this.recipes = this.sortBy(this.recipesSortKey, this.recipes);
   }
 }
