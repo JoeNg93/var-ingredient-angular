@@ -1,6 +1,41 @@
-<h1>Recipe Detail</h1>
+<div class="col-sm-8 col-sm-offset-2 ph4 pv4" *ngIf="recipeNotEmpty(recipe)">
+  <div class="row pv3 center-xs">
+    <span class="f2">{{recipe.name}}</span>
+  </div>
 
-<div *ngIf="recipeNotEmpty(recipe)">
-  <p>Recipe ID: {{recipe.id}}</p>
-  <p>Recipe Name: {{recipe.name}}</p>
+  <div class="row col-xs-offset-1 col-xs-10 pv3 center-xs">
+    <span class="f3 gray"><i>""{{recipe.description}}""</i></span>
+  </div>
+
+  <div class="row center-xs pv3 mb3">
+    <span class="mr2">
+      <mat-icon>access_time</mat-icon>
+    </span>
+    <span class="f3">{{recipe.cookingTime}} minutes</span>
+  </div>
+
+  <div class="row img-container" [style.backgroundImage]="'url(' + getImageUrl() + ')'">
+  </div>
+
+  <div class="row pv4">
+    <span class="f3 dark-blue">Ingredients</span>
+    <div class="pv2 w-100">
+      <mat-divider></mat-divider>
+    </div>
+    <ul>
+      <li class="pv2 f4" type="square" *ngFor="let ingredient of recipe.ingredients">{{ingredient.quantity}}
+        {{ingredient.name}}</li>
+    </ul>
+  </div>
+
+  <div class="row pv3">
+    <span class="f3 dark-blue">Instructions</span>
+    <div class="pv2 w-100">
+      <mat-divider></mat-divider>
+    </div>
+    <ol>
+      <li class="pv2 f4" *ngFor="let instruction of recipe.instructions">{{instruction}}</li>
+    </ol>
+  </div>
+
 </div>

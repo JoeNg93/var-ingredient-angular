@@ -29,4 +29,10 @@ export class RecipeDetailComponent implements OnInit {
   recipeNotEmpty() {
     return !_isEmpty(this.recipe);
   }
+
+  getImageUrl() {
+    return `http://res.cloudinary.com/dicyn7jds/image/upload/${
+      this.recipe.image.versionId
+    }/${this.recipe.image._id}.${this.recipe.image.imageType}`;
+  }
 }
