@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { isEmpty as _isEmpty } from 'lodash';
+import _isEmpty from 'lodash/isEmpty';
 
 import { RecipeService } from '../recipe.service';
 import { Recipe } from '../recipe.model';

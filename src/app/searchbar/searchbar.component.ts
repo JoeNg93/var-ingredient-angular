@@ -7,7 +7,9 @@ import {
   MatAutocompleteSelectedEvent,
   MatChipInputEvent,
 } from '@angular/material';
-import { difference, map as _map, isEmpty as _isEmpty } from 'lodash';
+import _difference from 'lodash/difference';
+import _map from 'lodash/map';
+import _isEmpty from 'lodash/isEmpty';
 import { IngredientService } from '../ingredient.service';
 import { Ingredient } from '../ingredient.model';
 
@@ -89,7 +91,7 @@ export class SearchbarComponent implements OnInit {
   }
 
   private _getAutocompleteIngredients() {
-    return difference(this.allIngredients, this.ingredients);
+    return _difference(this.allIngredients, this.ingredients);
   }
 
   private _filter(value: string): string[] {

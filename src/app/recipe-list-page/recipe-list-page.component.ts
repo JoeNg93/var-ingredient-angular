@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  groupBy as _groupBy,
-  isEmpty as _isEmpty,
-  map as _map,
-  intersection as _intersection,
-  orderBy as _orderBy,
-} from 'lodash';
+import _groupBy from 'lodash/groupBy';
+import _isEmpty from 'lodash/isEmpty';
+import _map from 'lodash/map';
+import _intersection from 'lodash/intersection';
+import _orderBy from 'lodash/orderBy';
 
 import { RecipeService } from '../recipe.service';
 import { IngredientService } from '../ingredient.service';
